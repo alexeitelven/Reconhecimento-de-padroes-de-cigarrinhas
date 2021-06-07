@@ -44,8 +44,9 @@ def pesquisa_imagem(img_carregada):
     CAMINHO_CIGARRAS = 'D:/#Faculdade/WSPython/Trabalho Final - Reconhecimento de imagens/Cigarrinhas' # colocar o caminho da pasta que contem as pastas das cigarras
     
     #img_busca= 'Cicadellini/Pawiloma victima/IMG_0004.JPG';
-    #img_busca= img_carregada
-    img_busca = 'Cicadellini/Pawiloma victima/IMG_0004.JPG'
+    img_busca= img_carregada
+    
+    #img_busca = 'Cicadellini/Pawiloma victima/IMG_0004.JPG'
     
     img_referencias=[
     	'Cicadellini/Pawiloma victima/P victima.jpg',
@@ -62,7 +63,8 @@ def pesquisa_imagem(img_carregada):
     sift = cv2.SIFT_create(400)
     
     print("Busca: " + img_busca)
-    img = cv2.imread(CAMINHO_CIGARRAS + '/' + img_busca,cv2.IMREAD_GRAYSCALE)
+    #img = cv2.imread(CAMINHO_CIGARRAS + '/' + img_busca,cv2.IMREAD_GRAYSCALE)
+    img = cv2.imread(img_busca,cv2.IMREAD_GRAYSCALE)
     kp, des = sift.detectAndCompute(img,None)
     
     FLANN_INDEX_KDTREE = 1
