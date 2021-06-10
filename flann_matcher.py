@@ -62,7 +62,7 @@ def pesquisa_imagem(img_carregada):
     
     sift = cv2.SIFT_create(400)
     
-    print("Busca: " + img_busca)
+    #print("Busca: " + img_busca)
     #img = cv2.imread(CAMINHO_CIGARRAS + '/' + img_busca,cv2.IMREAD_GRAYSCALE)
     img = cv2.imread(img_busca,cv2.IMREAD_GRAYSCALE)
     kp, des = sift.detectAndCompute(img,None)
@@ -73,7 +73,7 @@ def pesquisa_imagem(img_carregada):
     flann = cv2.FlannBasedMatcher(index_params,search_params)
     
     for img_referencia in img_referencias:
-    	print("Ref: " + img_referencia)
+    	print("Imagem de Ref: " + img_referencia)
     	
     	img_ref = cv2.imread(CAMINHO_CIGARRAS + '/' + img_referencia,cv2.IMREAD_GRAYSCALE)
     	kp_ref, des_ref = sift.detectAndCompute(img_ref,None)
@@ -87,8 +87,8 @@ def pesquisa_imagem(img_carregada):
     		# ~ if (m.distance / n.distance) < 0.96:
     			hits = hits + 1
     	#img=cv2.drawKeypoints(kp_ref,img_ref)
-    	ratio = hits / len(kp_ref)
-    	print(ratio)
+    	ratio = (hits / len(kp_ref))*100
+    	print("Percentual de Caracteristicas parecidas é %.4f \n" % (ratio))
 #-----------------------------------------------------------------------------
 
 def main():
@@ -96,18 +96,20 @@ def main():
     #sg.theme('Gray')
     layout = [      
         [
-            sg.Text("Imagem escolhida"),
+            sg.Text("Cigarra Escolhida"),
             sg.Input(size=(25, 1), key="Arquivo"),
             sg.FileBrowse(file_types=file_types),
             sg.Button("Fazer Busca"),
         ],
         [
-            sg.Image(key="-imgOriginal-"),
-            sg.Image(key="-imgEditada-") 
+            
+            #sg.Image(key="-imgEditada-") 
+            sg.Output(size=(100,35)),
+            sg.Image(key="-imagemCigarra-")
         ],
     ]
     
-    window = sg.Window("Filtros Espaciais",layout,finalize=True,resizable=True)
+    window = sg.Window("Reconhecimento de padrões de cigarrinhas",layout,finalize=True,resizable=True)
     window.maximize()
     
     
@@ -126,8 +128,8 @@ def main():
                 image.thumbnail((larguraTela/2, alturaTela/2))
                 bio = io.BytesIO()
                 image.save(bio, format="PNG")
-                window["-imgOriginal-"].update(data=bio.getvalue())
-                window["-imgEditada-"].update(data=bio.getvalue())
+                window["-imagemCigarra-"].update(data=bio.getvalue())
+                #window["-imgEditada-"].update(data=bio.getvalue())
 
             
     window.close()
