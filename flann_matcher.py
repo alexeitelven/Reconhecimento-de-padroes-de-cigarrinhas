@@ -23,13 +23,19 @@ import os
 import PySimpleGUI as sg
 from PIL import Image
 import cv2 as cv2
-from win32api import GetSystemMetrics
 
 
 #-----------------------------------------------------------------------------
 #Definições
-larguraTela = GetSystemMetrics(0)
-alturaTela = GetSystemMetrics(1)
+if os.name == 'posix':
+    import pyautogui
+    dimensoes = pyautogui.size()
+    larguraTela = dimensoes[0]
+    alturaTela = dimensoes[1]
+else:
+    from win32api import GetSystemMetrics
+    larguraTela = GetSystemMetrics(0)
+    alturaTela = GetSystemMetrics(1)
 #Local do banco de dados de imagens
 CAMINHO_CIGARRAS = 'D:/#Faculdade/WSPython/Trabalho Final - Reconhecimento de imagens/Cigarrinhas' # colocar o caminho da pasta que contem as pastas das cigarras
 
@@ -43,7 +49,7 @@ def files_path06(*args):
     for item in args:
         for p, _, files in os.walk(os.path.abspath(item)):
             for file in files:
-                lista.append((p+'\\'+ file))
+                lista.append((p+ os.sep + file))
     return lista
 
 #----------------------------------------------------------------------------
@@ -135,7 +141,8 @@ def main():
     ]
     
     window = sg.Window("Reconhecimento de padrões de cigarrinhas",layout,finalize=True,resizable=True)
-    window.maximize()
+    if os.name != 'posix':
+        window.maximize()
     
     
     while True:
