@@ -101,7 +101,7 @@ def pesquisa_imagem(img_carregada):
             max_img_referencias = img_referencias[i]
             max_matches = matches 
             max_kp_ref = kp_ref
-            
+   
     nome_especie = max_img_referencias.split('.')[0].split(os.sep)[-1]
     print("----------------------------------------------------------------------------------------------------------------\n")
     print("- A cigarra com mais caracteristicas parecidas da imagem referencia: \n")
@@ -141,7 +141,8 @@ def main():
             sg.Button("Buscar"),
         ],
         [
-            sg.Output(size=(larguraTela,15)),
+            sg.Output(size=(150,17)),
+            sg.Image(key="-imagemCigarraOriginal-")
         ],
         [
             sg.Image(key="-imagemCigarra-")
@@ -163,9 +164,17 @@ def main():
         if event == "Buscar":
             filename = values["Arquivo"]
             if os.path.exists(filename):
+               
+                
+                imageOriginal = Image.open(filename)
+                imageOriginal.thumbnail((larguraTela//4, alturaTela//4))
+                bio2 = io.BytesIO()
+                imageOriginal.save(bio2, format="PNG")
+                window["-imagemCigarraOriginal-"].update(data=bio2.getvalue())
+                
                 pesquisa_imagem(filename)
                 image = Image.open("hitPoints.png")
-                image.thumbnail((larguraTela, alturaTela/1.3))
+                image.thumbnail((larguraTela//1.15,alturaTela//1.15))
                 bio = io.BytesIO()
                 image.save(bio, format="PNG")
                 window["-imagemCigarra-"].update(data=bio.getvalue())
