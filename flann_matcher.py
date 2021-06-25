@@ -38,6 +38,9 @@ else:
 #Local do banco de dados de imagens
 CAMINHO_CIGARRAS = 'D:/#Faculdade/WSPython/Trabalho Final - Reconhecimento de imagens/Cigarrinhas' # colocar o caminho da pasta que contem as pastas das cigarras
 
+if os.name == 'posix':
+    CAMINHO_CIGARRAS = '/home/penguin/Documentos/processamento_imagens/cigarras/'
+
 file_types = [("JPEG (*.jpg)", "*.jpg"),
               ("All files (*.*)", "*.*")]
 
