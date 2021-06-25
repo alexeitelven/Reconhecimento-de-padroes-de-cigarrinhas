@@ -102,9 +102,10 @@ def pesquisa_imagem(img_carregada):
             max_matches = matches 
             max_kp_ref = kp_ref
             
+    nome_especie = max_img_referencias.split('.')[0].split(os.sep)[-1]
     print("----------------------------------------------------------------------------------------------------------------\n")
     print("- A cigarra com mais caracteristicas parecidas da imagem referencia: \n")
-    print(" %s \n" % (max_img_referencias,))
+    print(" %s \n" % (nome_especie,))
     print("-Com %.4f caracteristicas parecidas.\n" % (max_ratio))
     print("----------------------------------------------------------------------------------------------------------------\n")
     # Need to draw only good matches, so create a mask
